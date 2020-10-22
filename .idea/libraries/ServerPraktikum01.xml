@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="ServerPraktikum01">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/VS01/out/artifacts/ServerPraktikum01_jar/ServerPraktikum01.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

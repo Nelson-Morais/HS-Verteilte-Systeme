@@ -17,7 +17,6 @@ int port;
     void sendMessage(String s,InetAddress inetAddress) throws IOException {
         byte[] raw = s.getBytes();
         DatagramPacket datagramPacket = new DatagramPacket(raw, raw.length, inetAddress, port);
-        System.out.println(port);
         DatagramSocket datagramSocket = new DatagramSocket();
         datagramSocket.send(datagramPacket);
     }
