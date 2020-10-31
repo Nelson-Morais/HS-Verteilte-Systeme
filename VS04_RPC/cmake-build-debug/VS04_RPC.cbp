@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="VS04_RPC"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="RPC_Client">
+				<Option output="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/RPC_Client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 RPC_Client"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="RPC_Client/fast">
+				<Option output="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/RPC_Client" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 RPC_Client/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="RPC_Receiver">
+				<Option output="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/RPC_Receiver" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 RPC_Receiver"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="RPC_Receiver/fast">
+				<Option output="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/RPC_Receiver" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 RPC_Receiver/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="RPC_Server">
+				<Option output="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/RPC_Server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 RPC_Server"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="RPC_Server/fast">
+				<Option output="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/RPC_Server" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 RPC_Server/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/ladmin/CLionProjects/VS04_RPC/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/pub_sub_clnt.c">
+			<Option target="RPC_Client"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/pub_sub_deliv_svc.c">
+			<Option target="RPC_Receiver"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/pub_sub_deliv_xdr.c">
+			<Option target="RPC_Receiver"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/pub_sub_xdr.c">
+			<Option target="RPC_Client"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/client/client.c">
+			<Option target="RPC_Client"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/client/receiver.c">
+			<Option target="RPC_Receiver"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/server/RPC_Protocol_files/pub_sub_deliv_clnt.c">
+			<Option target="RPC_Server"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/server/RPC_Protocol_files/pub_sub_deliv_xdr.c">
+			<Option target="RPC_Server"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/server/RPC_Protocol_files/pub_sub_svc.c">
+			<Option target="RPC_Server"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/server/RPC_Protocol_files/pub_sub_xdr.c">
+			<Option target="RPC_Server"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/server/dispatcher.c">
+			<Option target="RPC_Server"/>
+		</Unit>
+		<Unit filename="/home/ladmin/CLionProjects/VS04_RPC/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

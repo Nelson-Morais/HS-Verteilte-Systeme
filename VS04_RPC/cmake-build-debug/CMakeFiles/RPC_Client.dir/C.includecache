@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/pub_sub.h
+rpc/rpc.h
+-
+
+/home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/return_codes.h
+
+/home/ladmin/CLionProjects/VS04_RPC/client/client.c
+stdlib.h
+-
+unistd.h
+-
+rpc/rpc.h
+-
+string.h
+-
+RPC_Protocol_files/pub_sub.h
+/home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/pub_sub.h
+RPC_Protocol_files/return_codes.h
+/home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/return_codes.h
+

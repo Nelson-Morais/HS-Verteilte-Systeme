@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/VS04_RPC.dir/client/client.c.o CMakeFiles/VS04_RPC.dir/client/RPC_Protocol_files/pub_sub_clnt.c.o CMakeFiles/VS04_RPC.dir/client/RPC_Protocol_files/pub_sub_xdr.c.o  -o VS04_RPC 

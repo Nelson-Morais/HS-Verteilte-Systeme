@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/RPC_Client.dir/client/client.c.o CMakeFiles/RPC_Client.dir/client/RPC_Protocol_files/pub_sub_clnt.c.o CMakeFiles/RPC_Client.dir/client/RPC_Protocol_files/pub_sub_xdr.c.o  -o RPC_Client 
