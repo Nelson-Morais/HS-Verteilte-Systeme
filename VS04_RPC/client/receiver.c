@@ -9,6 +9,8 @@
 
 void * deliver_1_svc(postmessage *postmessage, struct svc_req *request){
 
+    //TODO: kann erweitert werden mit message from Server or not detection
+
     char *msg;
     msg = strtok(*postmessage,">");
     printf("Message from: %s\n",msg);
