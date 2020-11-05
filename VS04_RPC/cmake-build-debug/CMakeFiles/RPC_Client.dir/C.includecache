@@ -21,6 +21,8 @@ rpc/rpc.h
 -
 string.h
 -
+wait.h
+-
 RPC_Protocol_files/pub_sub.h
 /home/ladmin/CLionProjects/VS04_RPC/client/RPC_Protocol_files/pub_sub.h
 RPC_Protocol_files/return_codes.h

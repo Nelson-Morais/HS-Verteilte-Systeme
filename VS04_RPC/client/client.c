@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <rpc/rpc.h>
 #include <string.h>
+#include <wait.h>
 #include "RPC_Protocol_files/pub_sub.h"
 #include "RPC_Protocol_files/return_codes.h"
 
@@ -68,7 +69,7 @@ int main(int argc, char *argv[]) {
             setTopic(clnt);
 
         } else if (strcmp(input, "exit") == 0) {
-            printf("closing the application.");
+            printf("closing the application.\n");
             unsubscribeFromDispatcher(clnt);
             free(input);
             clnt_destroy(clnt);
@@ -95,12 +96,13 @@ void menuNavigation(char *input) {
 
 
     //fgets kann mit '\n' enden, FIX! ( Quelle Stackoverflow: https://stackoverflow.com/questions/38767967/clear-input-buffer-after-fgets-in-c )
-    if(fgets(input,MAXINPUT,stdin)){
+    if (fgets(input, MAXINPUT, stdin)) {
         char *p;
-        if((p=strchr(input, '\n')) != NULL){//check exist newline
+        if ((p = strchr(input, '\n')) != NULL) {//check exist newline
             *p = '\0';
         } else {
-            scanf("%*[^\n]");scanf("%*c");//clear upto newline
+            scanf("%*[^\n]");
+            scanf("%*c");//clear upto newline
         }
     }
 }
@@ -114,15 +116,20 @@ void subscribeToDispatcher(CLIENT *clnt) {
     } else {
         printf("Subscribe status: %s\n", PUB_SUB_RET_CODE[*return_code]);
     }
-    if(*return_code == OK){
+    if (*return_code == OK) {
         //ZUSATZAUFGABE
         //receivers childprocess
+        printf("Starting the message receiver...\n");
         childPID = fork();
-        char *args[] = {};
-        if (childPID == 0){
-            printf("Starting the message receiver...");
+        char *args[] = {0};
+
+        if (childPID == 0) {
             execvp("./RPC_Receiver", args);
+
         }
+        if (childPID == -1)
+            printf("Error beim starten des Receivers. Fork() Failed.\n");
+
     }
 }
 
@@ -136,9 +143,37 @@ void unsubscribeFromDispatcher(CLIENT *clnt) {
         printf("Unsubscribe status: %s\n", PUB_SUB_RET_CODE[*return_code]);
     }
     //ZUSATZAUFGABE
+    if (childPID != -1 && childPID != 0 && *return_code == OK) {
 
-    if(childPID != 0)
+        printf("Closing the message receiver");
+
+        //Versuchen kind prozess zu terminieren mit SIGTERM ( gracefully termination )
         kill(childPID, SIGTERM);
+
+        int childDead = 0;
+        int status;
+        //Das kind Prozess bekommt 5 Sekunden um gracefully beendet zu werden
+        for (int i = 0; !childDead && i < 5; i++) {
+
+            printf(".");
+            //stdout buffer wird geflusht da keine \n vorhanden ist um ein "loading" zu erzeugen während das kind prozess schliesst,
+            // jede weitere sekunde wird ein "." auf stdout buffer gepackt und durch flush sofort ausgedruckt.
+            fflush(stdout);
+            sleep(1);
+            //wenn der state des kindprozesses sich geändert hat, wird die flag gesetzt zum abbrechen des loops.
+            //an diese stelle ist das kind prozess mit SIGTERM geschlossen worden.
+
+            if (waitpid(childPID, &status, WNOHANG) == childPID) {
+                childDead = 1;
+                printf("\n");
+            }
+
+        }
+        //nach 5 sekunden wenn SIGTERM nicht erfolgreich gewesen ist, wird das prozess mit SIGKILL
+        //"gewaltig" beendet. Hierdurch wird abgesichert das kein "zoombie" prozesse im system bleiben.
+        if (!childDead)
+            kill(childPID, SIGKILL);
+    }
 }
 
 void sendMessage(CLIENT *clnt) {
@@ -146,20 +181,22 @@ void sendMessage(CLIENT *clnt) {
     message msg = malloc(MESLEN * sizeof(char));
 
     printf("Enter message: ");
+    fflush(stdout);
     //fgets kann mit '\n' enden, FIX! ( Quelle Stackoverflow: https://stackoverflow.com/questions/38767967/clear-input-buffer-after-fgets-in-c )
-    if(fgets(msg,MESLEN,stdin)){
+    if (fgets(msg, MESLEN, stdin)) {
         char *p;
-        if((p=strchr(msg, '\n')) != NULL){//check exist newline
+        if ((p = strchr(msg, '\n')) != NULL) {//check exist newline
             *p = '\0';
         } else {
-            scanf("%*[^\n]");scanf("%*c");//clear upto newline
+            scanf("%*[^\n]");
+            scanf("%*c");//clear upto newline
         }
     }
     //gleicher konzept wie subscribe_1, ohne OK
     return_code = publish_1(&msg, clnt);
-    if (return_code == NULL) {
-        printf("%s\n", PUB_SUB_RET_CODE[UNKNOWN_ERROR]);
-    }
+
+    printf("Message status: %s\n", PUB_SUB_RET_CODE[*return_code]);
+
     free(msg);
 }
 
@@ -169,13 +206,15 @@ void setTopic(CLIENT *clnt) {
     memset(topic, '\0', sizeof(*topic));
 
     printf("Enter topic: ");
+    fflush(stdout);
     //fgets kann mit '\n' enden, FIX! ( Quelle Stackoverflow: https://stackoverflow.com/questions/38767967/clear-input-buffer-after-fgets-in-c )
-    if(fgets(topic,TOPLEN,stdin)){
+    if (fgets(topic, TOPLEN, stdin)) {
         char *p;
-        if((p=strchr(topic, '\n')) != NULL){//check exist newline
+        if ((p = strchr(topic, '\n')) != NULL) {//check exist newline
             *p = '\0';
         } else {
-            scanf("%*[^\n]");scanf("%*c");//clear upto newline
+            scanf("%*[^\n]");
+            scanf("%*c");//clear upto newline
         }
     }
     //gleicherkonzept wie subscribe_1

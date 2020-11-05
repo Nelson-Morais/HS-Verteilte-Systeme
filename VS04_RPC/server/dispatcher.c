@@ -22,7 +22,7 @@ short *set_channel_1_svc(topic *topic, struct svc_req *request) {
 
     //check ob es local ist
     if ((strcmp(req_addr, LOCALADDRESS)) == 0) {
-        strcpy(current_topic,*topic);
+        strcpy(current_topic, *topic);
         printf(" --- Setting topic: %s --- \n", *topic);
         return_code = OK;
     } else {
@@ -44,7 +44,7 @@ short *subscribe_1_svc(void *ptr, struct svc_req *request) {
         strcpy(subs[counter++], req_addr);
         printf(" --- Registered client with IP: %s to the subscriber list --- \n", req_addr);
 
-        printf(" --- IPs in the Subscriber list --- \n");
+        printf(" --- IPs in the Subscriber list --- \n\n");
         for (int x = 0; x < counter; x++) {
             printf("%s\n", subs[x]);
         }
@@ -63,36 +63,47 @@ extern short *unsubscribe_1_svc(void *ptr, struct svc_req *request) {
     char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
     char tmp[MAXSUBS][IPV4LENGTH];
 
-    for (int i = 0; i < counter; i++) {
-        if ((strcmp(subs[i], req_addr)) == 0) {
-            printf(" --- Unregistring client with IP: %s from the subscriber list --- \n", req_addr);
-            //wenn es letzter element ist.
-            if (i == MAXSUBS - 1) {
-                for (int k = 0; k < MAXSUBS - 1; k++) {
-                    strcpy(tmp[k], subs[k]);
+    if (counter > 0) {
+        for (int i = 0; i < counter; i++) {
+            if ((strcmp(subs[i], req_addr)) == 0) {
+                printf(" --- Unregistring client with IP: %s from the subscriber list --- \n", req_addr);
+                //wenn es letzter element ist.
+                if (i == MAXSUBS - 1) {
+                    for (int k = 0; k < MAXSUBS - 1; k++) {
+                        strcpy(tmp[k], subs[k]);
+                    }
+                    //wenn nicht letzter element
+                } else {
+                    for (int j = i; j < counter; j++) {
+                        strcpy(subs[i], subs[i + 1]);
+                    }
+                    for (int l = 0; l < counter - 1; l++) {
+                        strcpy(tmp[l], subs[l]);
+                    }
                 }
-                //wenn nicht letzter element
-            } else {
-                for (int j = i; j < counter; j++) {
-                    strcpy(subs[i], subs[i + 1]);
-                }
-                for (int l = 0; l < counter - 1; l++) {
-                    strcpy(tmp[l], subs[l]);
-                }
+                memcpy(subs, tmp, sizeof(subs));
+                counter--;
+                return_code = OK;
+                break;
             }
-            memcpy(subs, tmp, sizeof(subs));
-            counter--;
-            return_code = OK;
-            break;
+            return_code = CANNOT_UNREGISTER;
         }
+        if (counter > 0) {
+            printf("\n --- IPs in the Subscriber list --- \n\n");
+            for (int x = 0; x < counter; x++) {
+                printf("%s\n", subs[x]);
+            }
+            printf("\n ---------------------------------- \n");
+        } else {
+            printf(" --- No IPs in the Subscriber list --- \n");
+        }
+
+    } else {
+        printf(" --- No IPs in the Subscriber list --- \n");
         return_code = CANNOT_UNREGISTER;
     }
 
-    printf("\n --- IPs in the Subscriber list --- \n");
-    for (int x = 0; x < counter; x++) {
-        printf("%s\n", subs[x]);
-    }
-    printf("\n ---------------------------------- \n");
+
     return &return_code;
 }
 
@@ -106,15 +117,21 @@ extern short *publish_1_svc(message *msg, struct svc_req *request) {
             //PUBSUBCLTPROG & PUBSUBCLTVER für delivery in pub_sub_deliv declariert
             clnt = clnt_create(subs[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
             snprintf(postmessage, POSTMESLEN, "%s>%s>%s", req_addr, *msg, current_topic);
-            deliver_1(&postmessage, clnt);
+            if (clnt != NULL) {
+                deliver_1(&postmessage, clnt);
+                return_code = OK;
+            } else {
+                clnt_pcreateerror(subs[i]);
+                return_code = UNKNOWN_ERROR;
+            }
             printf("Sending message to ip: %s\n", subs[i]);
         }
         printf("Message sent to all Subscribers: %s\n", postmessage);
-    }else{
-        printf("Message not sent. There are no clients subscribed.");
+    } else {
+        printf("Message not sent. There are no clients subscribed.\n");
+        return_code = UNKNOWN_ERROR;
     }
 
-    return_code = OK;
     return &return_code;
 
 }
