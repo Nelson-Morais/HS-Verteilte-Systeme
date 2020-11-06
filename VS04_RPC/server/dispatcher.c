@@ -1,6 +1,6 @@
 //
 // Created by Nelson Morais on 30.10.20.
-//
+// Verteilte Systeme RPC Dispatcher Praktikum 04
 
 #include <arpa/inet.h>
 #include "RPC_Protocol_files/pub_sub.h"
@@ -13,10 +13,11 @@
 
 char *current_topic;
 char subs[MAXSUBS][IPV4LENGTH];
-RET_CODE return_code;
 static int counter = 0;
 
 short *set_channel_1_svc(topic *topic, struct svc_req *request) {
+    //return_code static declariert ( auf heap angelet ) damit der return nicht die referenz aufm stack ist.
+    static RET_CODE return_code;
     current_topic = malloc(sizeof(char) * TOPLEN);
     char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
 
@@ -32,6 +33,9 @@ short *set_channel_1_svc(topic *topic, struct svc_req *request) {
 }
 
 short *subscribe_1_svc(void *ptr, struct svc_req *request) {
+    //return_code static declariert ( auf heap angelet ) damit der return nicht die referenz aufm stack ist.
+    static RET_CODE return_code;
+
     char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
 
     for (int i = 0; i < counter; i++) {
@@ -60,6 +64,8 @@ short *subscribe_1_svc(void *ptr, struct svc_req *request) {
 }
 
 extern short *unsubscribe_1_svc(void *ptr, struct svc_req *request) {
+    //return_code static declariert ( auf heap angelet ) damit der return nicht die referenz aufm stack ist.
+    static RET_CODE return_code;
     char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
     char tmp[MAXSUBS][IPV4LENGTH];
 
@@ -69,7 +75,7 @@ extern short *unsubscribe_1_svc(void *ptr, struct svc_req *request) {
                 printf(" --- Unregistring client with IP: %s from the subscriber list --- \n", req_addr);
                 //wenn es letzter element ist.
                 if (i == MAXSUBS - 1) {
-                    for (int k = 0; k < MAXSUBS - 1; k++) {
+                    for (int k = 0; k < MAXSUBS - 2; k++) {
                         strcpy(tmp[k], subs[k]);
                     }
                     //wenn nicht letzter element
@@ -97,17 +103,16 @@ extern short *unsubscribe_1_svc(void *ptr, struct svc_req *request) {
         } else {
             printf(" --- No IPs in the Subscriber list --- \n");
         }
-
     } else {
         printf(" --- No IPs in the Subscriber list --- \n");
         return_code = CANNOT_UNREGISTER;
     }
-
-
     return &return_code;
 }
 
 extern short *publish_1_svc(message *msg, struct svc_req *request) {
+    //return_code static declariert ( auf heap angelet ) damit der return nicht die referenz aufm stack ist.
+    static RET_CODE return_code;
     CLIENT *clnt;
     char *postmessage = malloc(sizeof(char) * POSTMESLEN);
     char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
@@ -116,7 +121,7 @@ extern short *publish_1_svc(message *msg, struct svc_req *request) {
         for (int i = 0; i < counter; i++) {
             //PUBSUBCLTPROG & PUBSUBCLTVER für delivery in pub_sub_deliv declariert
             clnt = clnt_create(subs[i], PUBSUBCLTPROG, PUBSUBCLTVERS, "tcp");
-            snprintf(postmessage, POSTMESLEN, "%s>%s>%s", req_addr, *msg, current_topic);
+            snprintf(postmessage, POSTMESLEN, "%s;%s;%s", req_addr, *msg, current_topic);
             if (clnt != NULL) {
                 deliver_1(&postmessage, clnt);
                 return_code = OK;
@@ -131,7 +136,5 @@ extern short *publish_1_svc(message *msg, struct svc_req *request) {
         printf("Message not sent. There are no clients subscribed.\n");
         return_code = UNKNOWN_ERROR;
     }
-
     return &return_code;
-
 }

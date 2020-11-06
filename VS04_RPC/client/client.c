@@ -1,6 +1,6 @@
 //
 // Created by Nelson Morais on 30.10.20.
-//
+// Verteilte Systeme RPC Client Praktikum 04
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -15,7 +15,7 @@
 
 //return_codes als short int wie in .h definiert umd die Rückgabewerte der funktionen zu speichern und prüfen/ausgeben
 //als globale variable, sichtbar für das ganze program: Tiddy funktionen parameterübergabe
-RET_CODE *return_code;
+
 
 //PID für receiver, global für Tiddy funktionen parameterübergabe
 pid_t childPID;
@@ -108,7 +108,7 @@ void menuNavigation(char *input) {
 }
 
 void subscribeToDispatcher(CLIENT *clnt) {
-
+    RET_CODE *return_code;
     return_code = subscribe_1(NULL, clnt);
     //pub_sub_clnt.c subscribe_1 liefert NULL zurück wenn RPC nicht "success" zeigt, oder short von clnt_call in clnt.h definizert, 0-Successful/andere wert nicht Successful.
     if (return_code == NULL) {
@@ -134,7 +134,7 @@ void subscribeToDispatcher(CLIENT *clnt) {
 }
 
 void unsubscribeFromDispatcher(CLIENT *clnt) {
-
+    RET_CODE *return_code;
     return_code = unsubscribe_1(NULL, clnt);
     //gleicher konzept wie subscribe_1
     if (return_code == NULL) {
@@ -177,6 +177,7 @@ void unsubscribeFromDispatcher(CLIENT *clnt) {
 }
 
 void sendMessage(CLIENT *clnt) {
+    RET_CODE *return_code;
     //message definiert in pub_sub.h
     message msg = malloc(MESLEN * sizeof(char));
 
@@ -201,6 +202,7 @@ void sendMessage(CLIENT *clnt) {
 }
 
 void setTopic(CLIENT *clnt) {
+    RET_CODE *return_code;
     //topic in pub_sub definiert
     topic topic = malloc(TOPLEN * sizeof(char));
     memset(topic, '\0', sizeof(*topic));
