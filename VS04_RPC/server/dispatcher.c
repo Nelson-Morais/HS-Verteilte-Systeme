@@ -75,7 +75,7 @@ extern short *unsubscribe_1_svc(void *ptr, struct svc_req *request) {
                 printf(" --- Unregistring client with IP: %s from the subscriber list --- \n", req_addr);
                 //wenn es letzter element ist.
                 if (i == MAXSUBS - 1) {
-                    for (int k = 0; k < MAXSUBS - 2; k++) {
+                    for (int k = 0; k < MAXSUBS - 1; k++) {
                         strcpy(tmp[k], subs[k]);
                     }
                     //wenn nicht letzter element
