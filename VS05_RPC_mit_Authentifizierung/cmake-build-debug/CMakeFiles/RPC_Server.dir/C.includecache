@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/server/RPC_Protocol_files/pub_sub.h
+rpc/rpc.h
+-
+
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/server/session_list.c
+session_list.h
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/server/session_list.h
+
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/server/session_list.h
+RPC_Protocol_files/pub_sub.h
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/server/RPC_Protocol_files/pub_sub.h
+

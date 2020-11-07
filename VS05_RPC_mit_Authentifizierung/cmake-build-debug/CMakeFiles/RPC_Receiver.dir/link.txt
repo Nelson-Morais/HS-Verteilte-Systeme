@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/RPC_Receiver.dir/client/receiver.c.o CMakeFiles/RPC_Receiver.dir/client/RPC_Protocol_files/pub_sub_deliv_svc.c.o CMakeFiles/RPC_Receiver.dir/client/RPC_Protocol_files/pub_sub_deliv_xdr.c.o  -o RPC_Receiver  -lcrypto 

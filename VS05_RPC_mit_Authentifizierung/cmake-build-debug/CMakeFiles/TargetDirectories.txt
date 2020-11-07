@@ -1,0 +1,5 @@
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Client.dir
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Receiver.dir
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Server.dir
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/edit_cache.dir

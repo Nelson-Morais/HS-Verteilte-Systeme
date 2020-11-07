@@ -1,0 +1,4 @@
+/opt/clion/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug

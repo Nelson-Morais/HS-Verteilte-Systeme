@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_deliv.h
+rpc/rpc.h
+-
+
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_deliv_svc.c
+pub_sub_deliv.h
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_deliv.h
+stdio.h
+-
+stdlib.h
+-
+rpc/pmap_clnt.h
+-
+string.h
+-
+memory.h
+-
+sys/socket.h
+-
+netinet/in.h
+-
+
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_deliv_xdr.c
+pub_sub_deliv.h
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_deliv.h
+
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/receiver.c
+stdio.h
+-
+rpc/rpc.h
+-
+string.h
+-
+RPC_Protocol_files/pub_sub_deliv.h
+/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_deliv.h
+
