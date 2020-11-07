@@ -16,7 +16,7 @@ char subs[MAXSUBS][IPV4LENGTH];
 static int counter = 0;
 
 short *set_channel_1_svc(topic *topic, struct svc_req *request) {
-    //return_code static declariert ( auf heap angelet ) damit der return nicht die referenz aufm stack ist.
+    //return_code static declariert ( auf static angelet ) damit der return nicht die referenz aufm stack ist.
     static RET_CODE return_code;
     current_topic = malloc(sizeof(char) * TOPLEN);
     char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
@@ -33,7 +33,7 @@ short *set_channel_1_svc(topic *topic, struct svc_req *request) {
 }
 
 short *subscribe_1_svc(void *ptr, struct svc_req *request) {
-    //return_code static declariert ( auf heap angelet ) damit der return nicht die referenz aufm stack ist.
+    //return_code static declariert ( auf static angelet ) damit der return nicht die referenz aufm stack ist.
     static RET_CODE return_code;
 
     char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
@@ -64,7 +64,7 @@ short *subscribe_1_svc(void *ptr, struct svc_req *request) {
 }
 
 extern short *unsubscribe_1_svc(void *ptr, struct svc_req *request) {
-    //return_code static declariert ( auf heap angelet ) damit der return nicht die referenz aufm stack ist.
+    //return_code static declariert ( auf static angelet ) damit der return nicht die referenz aufm stack ist.
     static RET_CODE return_code;
     char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
     char tmp[MAXSUBS][IPV4LENGTH];
@@ -111,7 +111,7 @@ extern short *unsubscribe_1_svc(void *ptr, struct svc_req *request) {
 }
 
 extern short *publish_1_svc(message *msg, struct svc_req *request) {
-    //return_code static declariert ( auf heap angelet ) damit der return nicht die referenz aufm stack ist.
+    //return_code static declariert ( auf static angelet ) damit der return nicht die referenz aufm stack ist.
     static RET_CODE return_code;
     CLIENT *clnt;
     char *postmessage = malloc(sizeof(char) * POSTMESLEN);
