@@ -24,6 +24,9 @@ extern "C" {
 #define CANNOT_UNREGISTER           3
 #define CANNOT_SET_TOPIC            4
 #define UNKNOWN_ERROR               5
+#define WRONG_PASSWORD              6
+#define NO_SESSION_FOUND            7
+#define NO_ACCOUNT_FOUND            8
 
 static char* PUB_SUB_RET_CODE[] = {
  "Ok.",                         /* OK                        */
@@ -31,7 +34,10 @@ static char* PUB_SUB_RET_CODE[] = {
  "Client already registered.",  /* CLIENT_ALREADY_REGISTERED */
  "Cannot unregister client.",   /* CANNOT_UNREGISTER         */
  "Cannot set topic.",           /* CANNOT_SET_TOPIC          */
- "Unknown error."               /* UNKNOWN_ERROR             */
+ "Unknown error.",              /* UNKNOWN_ERROR             */
+ "Wrong Password.",           /* NO_SESSION_FOUND          */
+ "No session found.",           /* WRONG_PASSWORD            */
+ "No account with this username." /*NO_ACOUNT_FOUND*/
 };
 
 typedef short RET_CODE;

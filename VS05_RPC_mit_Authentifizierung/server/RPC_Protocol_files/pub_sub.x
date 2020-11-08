@@ -7,8 +7,6 @@ const           MESLEN = 128;
 typedef string  topic <TOPLEN>;          /* Topic Name */
 typedef string  message <MESLEN>;        /* Nachricht / Message */
 
-
-
 const USERLEN = 12;
 const HASHLEN = 96; /* bei SHA 256 */
 typedef string hashstring <HASHLEN>; /* Parameter */
@@ -32,14 +30,12 @@ hashstring hash;
  */
 program PUBSUBPROG {
   version PUBSUBVERS {
-    short set_channel (topic) = 1;  /* Setzen des Channel Topics     */
-    short subscribe () = 2;         /* Receiver registrieren         */
-    short unsubscribe () = 3;       /* Receiver deregistrieren       */
-    short publish (message) = 4;    /* Nachricht an Channel schicken */
+    short set_channel (param) = 1;  /* Setzen des Channel Topics     */
+    short subscribe (param) = 2;         /* Receiver registrieren         */
+    short unsubscribe (param) = 3;       /* Receiver deregistrieren       */
+    short publish (param) = 4;    /* Nachricht an Channel schicken */
     sessionid get_session (user) = 5;
     short validate (param) = 6;
     short invalidate (sessionid) = 7;
   } =             1;
 } =             0x20000011;
-
-

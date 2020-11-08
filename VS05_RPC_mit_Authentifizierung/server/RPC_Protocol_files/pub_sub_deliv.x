@@ -12,3 +12,4 @@ program PUBSUBCLTPROG {
     void deliver (postmessage) = 1;     /* Auslieferung von Nachrichten */ 
   } =             1;
 } =             0x20000012;
+

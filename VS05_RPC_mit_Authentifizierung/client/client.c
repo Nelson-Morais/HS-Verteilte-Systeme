@@ -17,8 +17,9 @@
 
 
 //tmp
-struct argument arg;
-struct param para;
+struct argument *arg;
+struct param *para;
+hashstring hashstring_user_psw;
 
 
 //return_codes als short int wie in .h definiert umd die Rückgabewerte der funktionen zu speichern und prüfen/ausgeben
@@ -41,9 +42,21 @@ void sendMessage(CLIENT *clnt);
 
 void setTopic(CLIENT *clnt);
 
-char* hash_sha(char* str);
+char *hash_sha(char *str);
 
-char* input_user_pwd(user *user);
+char *input_user_pwd(user *user);
+
+void login_to_Server(CLIENT *clnt);
+
+void init_argument_struct();
+
+char *hash_two_params(char *, char *);
+
+char *hash_two_params_int(int para1, char *para2);
+
+void hash_param(param *param);
+
+void logout_of_the_server(CLIENT *clnt);
 
 int main(int argc, char *argv[]) {
     CLIENT *clnt;
@@ -52,11 +65,17 @@ int main(int argc, char *argv[]) {
     //Input for the menu navigation.
     char *input = malloc(sizeof(char) * MAXINPUT);
     //user
-    user user = malloc(sizeof(char) * USERLEN);
+
     //Hash
-    hashstring hashstring = malloc(sizeof(char)*HASHLEN);
+    hashstring_user_psw = malloc(sizeof(char) * HASHLEN);
 
+    //param struct
+    para = malloc(sizeof(struct param));
 
+    //argument struct
+    arg = malloc(sizeof(struct argument));
+
+    init_argument_struct();
 
 
     //Parameter prüfung und zuweisung
@@ -75,14 +94,10 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    memset(user,'\0',sizeof(*user));
-    memset(hashstring,'\0',sizeof(*hashstring));
 
-        //input user and password and generate the hashvalue
-        strcpy(hashstring, input_user_pwd(&user));
+    //Perform login and vaidation.
 
-
-        sid = get_session_1(&user, clnt);
+    login_to_Server(clnt);
 
     while (1) {
         menuNavigation(input);
@@ -95,9 +110,13 @@ int main(int argc, char *argv[]) {
             sendMessage(clnt);
         } else if (strcmp(input, "topic") == 0) {
             setTopic(clnt);
+        } else if (strcmp(input, "logout") == 0) {
+            logout_of_the_server(clnt);
+            login_to_Server(clnt);
         } else if (strcmp(input, "exit") == 0) {
             printf("closing the application.\n");
             unsubscribeFromDispatcher(clnt);
+            logout_of_the_server(clnt);
             free(input);
             clnt_destroy(clnt);
             exit(1);
@@ -119,7 +138,7 @@ void err_abort(char *str) {
 void menuNavigation(char *input) {
     printf("\n---choose an option---\n\nsub - subscribe the client to a dispatcher.\nunsub - unsubscribe the client from a dispatcher\n"
            "publish - publish a message to all subscribed clients\ntopic - set a message topic on the dispatcher. ONLY POSSBILE LOCALLY\n"
-           "exit - closes the application.\n\n"
+           "logout - logs the client out of the server\nexit - closes the application.\n\n"
            "input option: ");
 
 
@@ -137,7 +156,12 @@ void menuNavigation(char *input) {
 
 void subscribeToDispatcher(CLIENT *clnt) {
     RET_CODE *return_code;
-    return_code = subscribe_1(NULL, clnt);
+
+    para->arg.topic_or_message = 9;
+    para->arg.argument_u.t = "";
+    hash_param(para);
+
+    return_code = subscribe_1(para, clnt);
     //pub_sub_clnt.c subscribe_1 liefert NULL zurück wenn RPC nicht "success" zeigt, oder short von clnt_call in clnt.h definizert, 0-Successful/andere wert nicht Successful.
     if (return_code == NULL) {
         printf("%s\n", PUB_SUB_RET_CODE[UNKNOWN_ERROR]);
@@ -163,7 +187,12 @@ void subscribeToDispatcher(CLIENT *clnt) {
 
 void unsubscribeFromDispatcher(CLIENT *clnt) {
     RET_CODE *return_code;
-    return_code = unsubscribe_1(NULL, clnt);
+
+    para->arg.topic_or_message = 9;
+    para->arg.argument_u.t = "";
+    hash_param(para);
+
+    return_code = unsubscribe_1(para, clnt);
     //gleicher konzept wie subscribe_1
     if (return_code == NULL) {
         printf("%s\n", PUB_SUB_RET_CODE[UNKNOWN_ERROR]);
@@ -221,8 +250,11 @@ void sendMessage(CLIENT *clnt) {
             scanf("%*c");//clear upto newline
         }
     }
-    //gleicher konzept wie subscribe_1, ohne OK
-    return_code = publish_1(&msg, clnt);
+
+    para->arg.topic_or_message = 1;
+    para->arg.argument_u.t = msg;
+    hash_param(para);
+    return_code = publish_1(para, clnt);
 
     printf("Message status: %s\n", PUB_SUB_RET_CODE[*return_code]);
 
@@ -247,8 +279,11 @@ void setTopic(CLIENT *clnt) {
             scanf("%*c");//clear upto newline
         }
     }
-    //gleicherkonzept wie subscribe_1
-    return_code = set_channel_1(&topic, clnt);
+
+    para->arg.topic_or_message = 0;
+    para->arg.argument_u.t = topic;
+    hash_param(para);
+    return_code = set_channel_1(para, clnt);
     if (return_code == NULL) {
         printf("%s\n", PUB_SUB_RET_CODE[UNKNOWN_ERROR]);
     } else {
@@ -257,18 +292,62 @@ void setTopic(CLIENT *clnt) {
     free(topic);
 }
 
+void login_to_Server(CLIENT *clnt) {
+    RET_CODE *return_code = NULL;
+    //input user and password and generate the hashvalue
+    char *user = malloc(sizeof(char)*256);
+    hashstring_user_psw = input_user_pwd(&user);
+
+    para->id = *(get_session_1(&user, clnt));
+    para->arg = *arg;
+
+    char hash1[HASHLEN];
+    strcpy(hash1, hash_two_params_int(para->id, ""));
+    char hash2[HASHLEN];
+    para->hash = strcpy(hash2, hash_two_params(hash1, hashstring_user_psw));
+
+    return_code = validate_1(para, clnt);
+
+    if (*return_code != OK) {
+        printf("Login failed: %s\n", PUB_SUB_RET_CODE[*return_code]);
+    }
+    while (*return_code != OK) {
+        hashstring_user_psw = input_user_pwd(&user);
+
+        para->id = *(get_session_1(&user, clnt));
+        para->arg = *arg;
+        strcpy(hash1, hash_two_params_int(para->id, ""));
+        para->hash = strcpy(hash2, hash_two_params(hash1, hashstring_user_psw));
+        return_code = validate_1(para, clnt);
+        if (*return_code != OK) {
+            printf("Login failed: %s\n", PUB_SUB_RET_CODE[*return_code]);
+        }
+    }
+    free(user);
+}
+
+
 /*
  * Hash aus user und pwd bilden -> dieser muss im Server-Digest gespeichert
  * werden.
  */
-char* hash_user_pwd(char* user, char* pwd) {
-    char str [256];
-    sprintf(str, "%s;%s", user, pwd);
+
+char *hash_two_params_int(int para1, char *para2) {
+    char str[256];
+    sprintf(str, "%d;%s", para1, para2);
     return hash_sha(str);
+
+}
+
+char *hash_two_params(char *para1, char *para2) {
+    char str[256];
+    sprintf(str, "%s;%s", para1, para2);
+    return hash_sha(str);
+
 }
 
 /* Hashfunktionen mit verschiedenen Parametern */
-char* hash_sha(char* str) {
+char *hash_sha(char *str) {
     unsigned char result[SHA256_DIGEST_LENGTH];
     SHA256(str, strlen(str), result);
     char hash_val[96];
@@ -282,10 +361,11 @@ char* hash_sha(char* str) {
     return strdup(hash_val);
 }
 
-char* input_user_pwd(user *user){
+char *input_user_pwd(user *user) {
     char pwd[MAXINPUT];
     char hash_val[HASHLEN];
 
+    printf("** LOGIN **\n");
     printf("user: ");
 
     //fgets kann mit '\n' enden, FIX! ( Quelle Stackoverflow: https://stackoverflow.com/questions/38767967/clear-input-buffer-after-fgets-in-c )
@@ -312,7 +392,36 @@ char* input_user_pwd(user *user){
     }
 
     fflush(stdout);
-    strcpy(hash_val,hash_user_pwd(*user,pwd));
+    strcpy(hash_val, hash_two_params(*user, pwd));
     return strdup(hash_val);
+
+}
+
+void init_argument_struct() {
+    arg->argument_u.m = "";
+    arg->argument_u.t = "";
+}
+
+void hash_param(param *param) {
+    char hash1[HASHLEN];
+
+    switch (param->arg.topic_or_message) {
+        case 0:
+            strcpy(hash1, hash_two_params_int(param->id, param->arg.argument_u.t));
+            break;
+        case 1:
+            strcpy(hash1, hash_two_params_int(param->id, param->arg.argument_u.m));
+            break;
+        default:
+            strcpy(hash1, hash_two_params_int(param->id, ""));
+            break;
+    }
+
+    param->hash = hash_two_params(hash1, hashstring_user_psw);
+}
+
+void logout_of_the_server(CLIENT *clnt) {
+    invalidate_1(&para->id, clnt);
+    printf("Logging out...\n\n\n");
 
 }

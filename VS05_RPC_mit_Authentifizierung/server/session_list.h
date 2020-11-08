@@ -17,9 +17,9 @@ typedef struct session_list *session;
 
 session insert_session(session, sessionid, user);
 
-session search_session(session, sessionid);
+session search_session(session , sessionid);
 
-session delete_session(session, sessionid);
+int delete_session(session, sessionid);
 
 void show_session_list(session);
 

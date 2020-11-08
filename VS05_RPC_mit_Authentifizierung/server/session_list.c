@@ -26,27 +26,30 @@ session insert_session(session session_list, sessionid sid, user user) {
 //}
 
 session search_session(session session_list, sessionid sid) {
-    while (session_list != NULL) {
-        if (session_list->sid == sid) {
-            return session_list;
+
+    session session_tmp = session_list;
+
+    while (session_tmp != NULL) {
+        if (session_tmp->sid == sid) {
+            return session_tmp;
         }
-        session_list = session_list->next;
+        session_tmp = session_tmp->next;
     }
     return NULL;
 }
 
-session delete_session(session session_list, sessionid sid) {
+int delete_session(session session_list, sessionid sid) {
     session temp;
     while (session_list != NULL) {
         if (session_list->next->sid == sid) {
             temp = session_list->next;
             session_list->next = session_list->next->next;
             free(temp);
-            return session_list->next;
+            return TRUE;
         }
         session_list = session_list->next;
     }
-    return NULL;
+    return FALSE;
 }
 
 void show_session_list(session session_list) {
