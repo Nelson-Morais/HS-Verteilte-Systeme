@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub.h
+/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub.h
 rpc/rpc.h
 -
 
-/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/return_codes.h
+/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/return_codes.h
 
-/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/client.c
+/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/client/client.c
 stdlib.h
 -
 unistd.h
@@ -26,7 +26,7 @@ wait.h
 openssl/sha.h
 -
 RPC_Protocol_files/pub_sub.h
-/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub.h
+/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub.h
 RPC_Protocol_files/return_codes.h
-/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/return_codes.h
+/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/return_codes.h
 

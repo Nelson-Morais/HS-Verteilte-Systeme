@@ -89,7 +89,6 @@ short *subscribe_1_svc(param *param, struct svc_req *request) {
         }
     }
     return &return_code;
-
 }
 
 extern short *unsubscribe_1_svc(param *param, struct svc_req *request) {
@@ -184,66 +183,31 @@ extern sessionid *get_session_1_svc(user *usr, struct svc_req *request) {
 
     insert_session(sessions, sid, *usr);
 
-
     return &sid;
 }
 
 extern short *validate_1_svc(param *param, struct svc_req *request) {
     //return_code static declariert ( auf static angelet ) damit der return nicht die referenz aufm stack ist.
     static RET_CODE return_code;
-    return_code = NO_ACCOUNT_FOUND;
-    FILE *file;
-    file = fopen("hashes.txt", "r");
-    session this_session;
 
-    char *ptrl = malloc(sizeof(char) * 256);//heap memory
-    char *line = ptrl; //stack pointer to heap memory damit wir der pointer auf heap nicht mit strtok() verlieren und später freigeben können.
-    this_session = search_session(sessions, param->id);
-    if (this_session == NULL) {
-        return_code = NO_SESSION_FOUND;
+    return_code = *check_session(param);
+    if (return_code == OK) {
+        validate_session(sessions, param->id);
     } else {
-        while (fgets(line, 256, file)) {
-            char *p;
-            if ((p = strchr(line, '\n')) != NULL) {//check exist newline and trim
-                *p = '\0';
-            }
-            line = strtok(line, " ");
-            if (strcmp(line, this_session->user) == 0) {
-                line = strtok(NULL, " ");
-                char hash[HASHLEN];
-                strcpy(hash, hash_two_params_int(param->id, ""));
-                char hash2[HASHLEN];
-                strcpy(hash2, hash_two_params(hash, line));
-                //TODO hash von session id + user&psw erstellen und prüfen
-                if (strcmp(hash2, param->hash) == 0) {
-                    return_code = OK;
-                    break;
-                } else {
-                    return_code = WRONG_PASSWORD;
-                    break;
-                }
-            }
-            line = ptrl;
-        }
-    }
-    if (return_code != OK) {
         delete_session(sessions, param->id);
     }
-    fclose(file);
-    free(ptrl);
+
     return &return_code;
 }
 
 extern short *invalidate_1_svc(const sessionid *sid, struct svc_req *request) {
     static RET_CODE return_code;
 
-
-    if(delete_session(sessions,*sid)){
+    if (delete_session(sessions, *sid)) {
         return_code = OK;
-    } else{
+    } else {
         return_code = NO_SESSION_FOUND;
     }
-
     return &return_code;
 }
 
@@ -258,14 +222,12 @@ char *hash_two_params_int(int para1, char *para2) {
     char str[256];
     sprintf(str, "%d;%s", para1, para2);
     return hash_sha(str);
-
 }
 
 char *hash_two_params(char *para1, char *para2) {
     char str[256];
     sprintf(str, "%s;%s", para1, para2);
     return hash_sha(str);
-
 }
 
 /* Hashfunktionen mit verschiedenen Parametern */
@@ -289,19 +251,21 @@ short *check_session(param *param) {
     return_code = NO_ACCOUNT_FOUND;
     FILE *file;
     file = fopen("hashes.txt", "r");
-    char hash1[HASHLEN];
-    char hash2[HASHLEN];
-    char finalHash[HASHLEN];
-    char *ptrl = malloc(sizeof(char) * 256);//heap memory
-    char *line = ptrl; //stack pointer to heap memory damit wir der pointer auf heap nicht mit strtok() verlieren und später freigeben können.
-
+    if (file == NULL) {
+        perror("Could not open the file.");
+        exit(1);
+    }
 
     session this_session = search_session(sessions, param->id);
-
     if (this_session == NULL) {
         return_code = NO_SESSION_FOUND;
         return &return_code;
     }
+    char hash1[HASHLEN];
+    char hash2[HASHLEN];
+
+    char *ptrl = malloc(sizeof(char) * 256);//heap memory
+    char *line = ptrl; //stack pointer to heap memory damit wir der pointer auf heap nicht mit strtok() verlieren und später freigeben können.
 
     switch (param->arg.topic_or_message) {
         case 0:
@@ -324,11 +288,18 @@ short *check_session(param *param) {
         if (strcmp(line, this_session->user) == 0) {
             line = strtok(NULL, " ");
             strcpy(hash2, hash_two_params(hash1, line));
+
             if (strcmp(hash2, param->hash) == 0) {
                 return_code = OK;
-                return &return_code;
+            } else {
+                if (!this_session->validated) {
+                    return_code = WRONG_PASSWORD;
+                } else {
+                    return_code = CORRUPTED_TRANSFER;
+                }
             }
         }
+        // line ptr zeigt wieder auf heap damit fgets() stack buffer nicht overflowt.
         line = ptrl;
     }
     fclose(file);

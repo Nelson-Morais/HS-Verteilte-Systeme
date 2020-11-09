@@ -1,4 +1,4 @@
-# Install script for directory: /home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung
+# Install script for directory: /home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

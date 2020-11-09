@@ -1,1 +1,0 @@
-/usr/bin/cc -g   CMakeFiles/VS05_RPC_mit_Authentifizierung.dir/main.c.o  -o VS05_RPC_mit_Authentifizierung 

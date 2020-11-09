@@ -21,11 +21,6 @@ struct argument *arg;
 struct param *para;
 hashstring hashstring_user_psw;
 
-
-//return_codes als short int wie in .h definiert umd die Rückgabewerte der funktionen zu speichern und prüfen/ausgeben
-//als globale variable, sichtbar für das ganze program: Tiddy funktionen parameterübergabe
-
-
 //PID für receiver, global für Tiddy funktionen parameterübergabe
 pid_t childPID;
 
@@ -94,9 +89,7 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-
     //Perform login and vaidation.
-
     login_to_Server(clnt);
 
     while (1) {
@@ -114,16 +107,17 @@ int main(int argc, char *argv[]) {
             logout_of_the_server(clnt);
             login_to_Server(clnt);
         } else if (strcmp(input, "exit") == 0) {
-            printf("closing the application.\n");
-            unsubscribeFromDispatcher(clnt);
-            logout_of_the_server(clnt);
-            free(input);
-            clnt_destroy(clnt);
-            exit(1);
+            break;
         }
         memset(input, '\0', sizeof(&input));
     }
 
+    printf("closing the application.\n");
+    unsubscribeFromDispatcher(clnt);
+    logout_of_the_server(clnt);
+    free(input);
+    clnt_destroy(clnt);
+    exit(1);
 }
 
 
@@ -295,7 +289,7 @@ void setTopic(CLIENT *clnt) {
 void login_to_Server(CLIENT *clnt) {
     RET_CODE *return_code = NULL;
     //input user and password and generate the hashvalue
-    char *user = malloc(sizeof(char)*256);
+    char *user = malloc(sizeof(char) * 256);
     hashstring_user_psw = input_user_pwd(&user);
 
     para->id = *(get_session_1(&user, clnt));
@@ -326,7 +320,6 @@ void login_to_Server(CLIENT *clnt) {
     free(user);
 }
 
-
 /*
  * Hash aus user und pwd bilden -> dieser muss im Server-Digest gespeichert
  * werden.
@@ -336,14 +329,12 @@ char *hash_two_params_int(int para1, char *para2) {
     char str[256];
     sprintf(str, "%d;%s", para1, para2);
     return hash_sha(str);
-
 }
 
 char *hash_two_params(char *para1, char *para2) {
     char str[256];
     sprintf(str, "%s;%s", para1, para2);
     return hash_sha(str);
-
 }
 
 /* Hashfunktionen mit verschiedenen Parametern */
@@ -394,7 +385,6 @@ char *input_user_pwd(user *user) {
     fflush(stdout);
     strcpy(hash_val, hash_two_params(*user, pwd));
     return strdup(hash_val);
-
 }
 
 void init_argument_struct() {
@@ -423,5 +413,4 @@ void hash_param(param *param) {
 void logout_of_the_server(CLIENT *clnt) {
     invalidate_1(&para->id, clnt);
     printf("Logging out...\n\n\n");
-
 }

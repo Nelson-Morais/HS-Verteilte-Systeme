@@ -27,6 +27,7 @@ extern "C" {
 #define WRONG_PASSWORD              6
 #define NO_SESSION_FOUND            7
 #define NO_ACCOUNT_FOUND            8
+#define CORRUPTED_TRANSFER          9
 
 static char* PUB_SUB_RET_CODE[] = {
  "Ok.",                         /* OK                        */
@@ -37,7 +38,8 @@ static char* PUB_SUB_RET_CODE[] = {
  "Unknown error.",              /* UNKNOWN_ERROR             */
  "Wrong Password.",           /* NO_SESSION_FOUND          */
  "No session found.",           /* WRONG_PASSWORD            */
- "No account with this username." /*NO_ACOUNT_FOUND*/
+ "No account with this username.", /*NO_ACOUNT_FOUND*/
+ "The transfer between client and server was corrupted." /* CORRPTED_TRANSFER */
 };
 
 typedef short RET_CODE;

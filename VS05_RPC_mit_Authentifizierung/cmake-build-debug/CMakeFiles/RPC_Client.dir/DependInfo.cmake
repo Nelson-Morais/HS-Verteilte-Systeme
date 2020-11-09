@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_clnt.c" "/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Client.dir/client/RPC_Protocol_files/pub_sub_clnt.c.o"
-  "/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_xdr.c" "/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Client.dir/client/RPC_Protocol_files/pub_sub_xdr.c.o"
-  "/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/client/client.c" "/home/ladmin/CLionProjects/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Client.dir/client/client.c.o"
+  "/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_clnt.c" "/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Client.dir/client/RPC_Protocol_files/pub_sub_clnt.c.o"
+  "/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/client/RPC_Protocol_files/pub_sub_xdr.c" "/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Client.dir/client/RPC_Protocol_files/pub_sub_xdr.c.o"
+  "/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/client/client.c" "/home/ladmin/Schreibtisch/HS-Verteilte-Systeme/VS05_RPC_mit_Authentifizierung/cmake-build-debug/CMakeFiles/RPC_Client.dir/client/client.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

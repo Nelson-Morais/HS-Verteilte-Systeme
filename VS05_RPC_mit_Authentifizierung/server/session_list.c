@@ -9,6 +9,7 @@ session insert_session(session session_list, sessionid sid, user user) {
     session new_session = malloc(sizeof(struct session_list));
     new_session->sid = sid;
     new_session->user = strdup(user);
+    new_session->validated = FALSE;
     new_session->next = NULL;
     while (session_list->next != NULL) {
         session_list = session_list->next;
@@ -17,13 +18,16 @@ session insert_session(session session_list, sessionid sid, user user) {
     return new_session;
 }
 
-//session löschen (s1 löschen: head -> s1 -> s2 // head -> s2 )
-//session delete_session(session session_list){
-//    session temp = session_list->next;
-//    session_list->next = session_list->next->next;
-//    free(temp);
-//    return session_list;
-//}
+
+int validate_session(session session_list , sessionid sid){
+
+    session session_tmp = search_session(session_list, sid);
+    if(session_tmp != NULL){
+        session_tmp->validated=TRUE;
+        return TRUE;
+    }
+    return FALSE;
+}
 
 session search_session(session session_list, sessionid sid) {
 
@@ -56,7 +60,7 @@ void show_session_list(session session_list) {
     int counter = 0;
     while (session_list != NULL) {
         if (session_list->user != NULL) {
-            printf("Session %d - user: %s sid: %d\n", ++counter, session_list->user, session_list->sid);
+            printf("Session %d - user: %s sid: %d validated: %d\n", ++counter, session_list->user, session_list->sid, session_list->validated);
         }
         session_list = session_list->next;
     }
