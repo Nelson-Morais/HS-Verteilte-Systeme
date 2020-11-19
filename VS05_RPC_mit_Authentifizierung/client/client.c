@@ -170,7 +170,12 @@ void subscribeToDispatcher(CLIENT *clnt) {
         char *args[] = {0};
 
         if (childPID == 0) {
-            execvp("./RPC_Receiver", args);
+
+
+            if(execvp("./RPC_Receiver", args) == -1){
+                printf("Cant find the Receiver, make sure RPC_Receiver is in the same Dir");
+                exit(1);
+            }
 
         }
         if (childPID == -1)

@@ -43,7 +43,10 @@ short *set_channel_1_svc(param *param, struct svc_req *request) {
     static RET_CODE return_code;
     return_code = *check_session(param);
     if (return_code == OK) {
-        current_topic = malloc(sizeof(char) * TOPLEN);
+
+        if(current_topic == NULL){
+        current_topic = malloc(sizeof(char) * TOPLEN);//TODO: malloc für topic what to do, when to free up ?
+        }
         char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
 
         //check ob es local ist
@@ -54,7 +57,6 @@ short *set_channel_1_svc(param *param, struct svc_req *request) {
         } else {
             return_code = CANNOT_SET_TOPIC;
         }
-
     }
     return &return_code;
 }
@@ -147,6 +149,7 @@ extern short *publish_1_svc(param *param, struct svc_req *request) {
     return_code = *check_session(param);
     if (return_code == OK) {
         CLIENT *clnt;
+
         char *postmessage = malloc(sizeof(char) * POSTMESLEN);
         char *req_addr = inet_ntoa(request->rq_xprt->xp_raddr.sin_addr);
 
@@ -169,7 +172,9 @@ extern short *publish_1_svc(param *param, struct svc_req *request) {
             printf("Message not sent. There are no clients subscribed.\n");
             return_code = UNKNOWN_ERROR;
         }
+        free(postmessage);
     }
+
     return &return_code;
 }
 
