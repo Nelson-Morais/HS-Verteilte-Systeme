@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="client:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/client_jar</output-path>
+    <root id="archive" name="vts6rmi.jar">
+      <element id="module-output" name="vts6rmi" />
+    </root>
+  </artifact>
+</component>
