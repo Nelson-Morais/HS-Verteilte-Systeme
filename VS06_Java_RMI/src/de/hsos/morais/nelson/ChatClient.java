@@ -72,7 +72,8 @@ public class ChatClient {
                 }
             }
         } catch (Exception exception) {
-            exception.printStackTrace();
+            System.out.println("Couldn't reach server. Exiting program.");
+            System.exit(-1);
         }
     }
 

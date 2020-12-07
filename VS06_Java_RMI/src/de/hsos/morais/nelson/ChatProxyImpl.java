@@ -4,6 +4,7 @@ import de.hsos.morais.nelson.ChatProxy;
 import de.hsos.morais.nelson.ChatServerImpl;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 
 public class ChatProxyImpl implements ChatProxy {
     ChatServerImpl chatServer=null;
@@ -15,15 +16,20 @@ public class ChatProxyImpl implements ChatProxy {
 
     @Override
     public void sendMessage(String message) throws RemoteException {
+        ArrayList<String> deadClients = new ArrayList<>();
         System.out.print("Sending message: "+ message + " from " + username + " to ");
         chatServer.getClients().forEach((key, value) -> {
             try {
                 value.receiveMessage(username, message);
                 System.out.print(key + ", ");
             } catch (RemoteException remoteException) {
-                System.err.println("Can't receive subscribed client.");
-                remoteException.printStackTrace();
+                System.out.println();
+                System.err.println("Can't reach " + key + ". Deleting client from list");
+                deadClients.add(key);
             }
+        });
+        deadClients.forEach((value) -> {
+          chatServer.getClients().remove(value);
         });
         System.out.println();
     }
