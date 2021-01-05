@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="BillboardWebsockets:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>BillboardWebsockets</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="BillboardWebsockets-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="BillboardWebsockets:war exploded" />
+    </root>
+  </artifact>
+</component>

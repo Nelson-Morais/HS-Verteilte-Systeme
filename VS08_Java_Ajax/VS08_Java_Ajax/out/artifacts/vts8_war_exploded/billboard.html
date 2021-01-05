@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Billboard Summer term 2019 edition</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script type="text/javascript" src="billboard.js"></script>
+        <script>
+            setGetMethod(1); /* 0: html; 1: JSON */
+        </script>
+    </head>
+    <body style="font-family:arial;">
+        <h1>Plakatwand WS 2020/21</h1> 
+        <h3>Neues Plakat einstellen:</h3>
+        <input type="text" size="100" maxlength="100" id="contents" name="contents">
+        <button onClick="postHttpRequest('BillBoardServer')">Post</button> <!--Gets called on click Billboard.js-->
+        <h3>Plakate:</h3>
+        <div id="posters">
+        </div>
+        <br>
+        <div id="timestamp" style="font-family:arial;font-size:10pt;">
+        </div>
+        <script type="text/javascript">
+            window.setInterval(function() {
+                getHttpRequest('BillBoardServer');<!--Gets called every 10 seconds -- Function in Billboard.js -->
+                $('timestamp').innerHTML = new Date().toString();<!--print Timestamp-->
+            }, 20000);
+        </script>
+    </body>
+</html>
